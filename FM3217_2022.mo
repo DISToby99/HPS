@@ -63,9 +63,48 @@ package FM3217_2022 "Collection of models in FM3217"
 
     model MotorDrive
       ElectricalMotor electricalMotor
-        annotation (Placement(transformation(extent={{-20,-12},{34,16}})));
-      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-            coordinateSystem(preserveAspectRatio=false)));
+        annotation (Placement(transformation(extent={{2,18},{56,34}})));
+      Modelica.Blocks.Continuous.PID PID(
+        k=7.5,
+        Ti=25,
+        Td=0.01)
+        annotation (Placement(transformation(extent={{-32,16},{-12,36}})));
+      Modelica.Blocks.Sources.Step step(
+        height=3.14,
+        offset=1,
+        startTime=50)
+        annotation (Placement(transformation(extent={{-98,16},{-78,36}})));
+      Modelica.Mechanics.Rotational.Components.Gearbox gearbox(ratio=100)
+        annotation (Placement(transformation(extent={{-2,-24},{18,-4}})));
+      Modelica.Blocks.Math.Feedback feedback
+        annotation (Placement(transformation(extent={{-66,16},{-46,36}})));
+      Modelica.Mechanics.Rotational.Components.Inertia inertia(J=5)
+        annotation (Placement(transformation(extent={{40,-24},{60,-4}})));
+      Modelica.Mechanics.Rotational.Sensors.AngleSensor angleSensor annotation
+        (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={74,-46})));
+    equation
+      connect(step.y, feedback.u1)
+        annotation (Line(points={{-77,26},{-64,26}}, color={0,0,127}));
+      connect(feedback.y, PID.u)
+        annotation (Line(points={{-47,26},{-34,26}}, color={0,0,127}));
+      connect(PID.y, electricalMotor.u)
+        annotation (Line(points={{-11,26},{4.16,26}}, color={0,0,127}));
+      connect(electricalMotor.y, gearbox.flange_a) annotation (Line(points={{
+              53.84,26},{62,26},{62,6},{-10,6},{-10,-14},{-2,-14}}, color={0,0,
+              0}));
+      connect(inertia.flange_a, gearbox.flange_b)
+        annotation (Line(points={{40,-14},{18,-14}}, color={0,0,0}));
+      connect(angleSensor.flange, inertia.flange_b)
+        annotation (Line(points={{74,-36},{74,-14},{60,-14}}, color={0,0,0}));
+      connect(angleSensor.phi, feedback.u2) annotation (Line(points={{74,-57},{
+              74,-72},{-56,-72},{-56,18}}, color={0,0,127}));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false)),
+        Diagram(coordinateSystem(preserveAspectRatio=false)),
+        experiment(StopTime=100));
     end MotorDrive;
   end Tutorial2;
   annotation (uses(Modelica(version="3.2.3")));
