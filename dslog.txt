@@ -1,28 +1,27 @@
 Log-file of program ./dymosim
-(generated: Mon Sep 12 13:53:50 2022)
+(generated: Mon Sep 19 12:50:07 2022)
 
 dymosim started
 ... "dsin.txt" loading (dymosim input file)
-... "MotorDrive.mat" creating (simulation result file)
+... "DCMachineTest.mat" creating (simulation result file)
 
 Integration started at T = 0 using integration method DASSL
 (DAE multi-step solver (dassl/dasslrt of Petzold modified by Dassault Systemes))
-Integration terminated successfully at T = 100
-   CPU-time for integration                : 0.014 seconds
-   CPU-time for one grid interval          : 0.028 milliseconds
+Integration terminated successfully at T = 1
+   CPU-time for integration                : 0.012 seconds
+   CPU-time for one grid interval          : 0.024 milliseconds
    CPU-time for initialization             : 0 seconds
-   Number of result points                 : 509
+   Number of result points                 : 502
    Number of grid points                   : 501
-   Number of accepted steps                : 382
-   Number of f-evaluations (dynamics)      : 767
-   Number of crossing function evaluations : 903
-   Number of Jacobian-evaluations          : 93
-   Number of model time events             : 1
+   Number of accepted steps                : 27
+   Number of f-evaluations (dynamics)      : 41
+   Number of Jacobian-evaluations          : 15
+   Number of model time events             : 0
    Number of input time events             : 0
-   Number of state events                  : 3
+   Number of state events                  : 0
    Number of step events                   : 0
-   Minimum integration stepsize            : 5.04e-08
-   Maximum integration stepsize            : 3.52
-   Maximum integration order               : 5
+   Minimum integration stepsize            : 2e-06
+   Maximum integration stepsize            : 0.131
+   Maximum integration order               : 4
 Calling terminal section
 ... "dsfinal.txt" creating (final states)
