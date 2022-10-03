@@ -377,5 +377,107 @@ package FM3217_2022 "Collection of models in FM3217"
       end DCGenerator;
     end Tests;
   end Tuturial3;
+
+  package Tutorial4 "Electric Kettle"
+    model EletricKettel
+      Modelica.Electrical.Analog.Basic.Resistor resistor(R=230^2/2000,
+          useHeatPort=true) annotation (Placement(transformation(
+            extent={{-10,10},{10,-10}},
+            rotation=270,
+            origin={32,0})));
+      Modelica.Electrical.Analog.Sources.SineVoltage sineVoltage(V=230*sqrt(2),
+          freqHz=50) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={-54,2})));
+      Modelica.Electrical.Analog.Basic.Ground ground
+        annotation (Placement(transformation(extent={{-10,-60},{10,-40}})));
+      Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor annotation (
+          Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=0,
+            origin={16,40})));
+      Modelica.Blocks.Math.Mean mean(f=50) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={0,-2})));
+      Modelica.Thermal.HeatTransfer.Components.HeatCapacitor water(C=4.18e3*1.7,
+          T(start=283.15, fixed=true))
+        annotation (Placement(transformation(extent={{50,12},{70,32}})));
+      Modelica.Thermal.HeatTransfer.Celsius.TemperatureSensor temperatureSensor
+        annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=0,
+            origin={86,0})));
+      Modelica.Thermal.HeatTransfer.Components.ThermalConductor KettleWall(G=5)
+        annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={60,-38})));
+      Modelica.Thermal.HeatTransfer.Sources.FixedTemperature RoomTemperature(T=
+            294.15) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=0,
+            origin={30,-70})));
+      Modelica.Blocks.Logical.OnOffController onOffController(bandwidth=3)
+        annotation (Placement(transformation(extent={{32,64},{12,84}})));
+      Modelica.Blocks.Sources.Constant const(k=95)
+        annotation (Placement(transformation(extent={{86,74},{66,94}})));
+      Modelica.Electrical.Analog.Ideal.IdealClosingSwitch switch1
+        annotation (Placement(transformation(extent={{-40,30},{-20,50}})));
+    equation
+      connect(resistor.n, ground.p)
+        annotation (Line(points={{32,-10},{32,-40},{0,-40}}, color={0,0,255}));
+      connect(sineVoltage.n, ground.p) annotation (Line(points={{-54,-8},{-54,
+              -40},{0,-40}}, color={0,0,255}));
+      connect(powerSensor.nc, resistor.p)
+        annotation (Line(points={{26,40},{32,40},{32,10}}, color={0,0,255}));
+      connect(powerSensor.pv, resistor.p)
+        annotation (Line(points={{16,50},{32,50},{32,10}}, color={0,0,255}));
+      connect(powerSensor.nv, ground.p)
+        annotation (Line(points={{16,30},{16,-40},{0,-40}}, color={0,0,255}));
+      connect(powerSensor.power, mean.u) annotation (Line(points={{6,29},{
+              2.22045e-15,29},{2.22045e-15,10}}, color={0,0,127}));
+      connect(water.port, resistor.heatPort) annotation (Line(points={{60,12},{
+              60,-1.77636e-15},{42,-1.77636e-15}}, color={191,0,0}));
+      connect(temperatureSensor.port, resistor.heatPort) annotation (Line(
+            points={{76,0},{76,-1.77636e-15},{42,-1.77636e-15}}, color={191,0,0}));
+      connect(KettleWall.port_a, resistor.heatPort) annotation (Line(points={{
+              60,-28},{60,-1.77636e-15},{42,-1.77636e-15}}, color={191,0,0}));
+      connect(RoomTemperature.port, KettleWall.port_b) annotation (Line(points=
+              {{40,-70},{60,-70},{60,-48}}, color={191,0,0}));
+      connect(powerSensor.pc, switch1.n)
+        annotation (Line(points={{6,40},{-20,40}}, color={0,0,255}));
+      connect(switch1.p, sineVoltage.p) annotation (Line(points={{-40,40},{-54,
+              40},{-54,12}}, color={0,0,255}));
+      connect(onOffController.y, switch1.control) annotation (Line(points={{11,
+              74},{-30,74},{-30,52}}, color={255,0,255}));
+      connect(onOffController.reference, const.y) annotation (Line(points={{34,
+              80},{50,80},{50,84},{65,84}}, color={0,0,127}));
+      connect(temperatureSensor.T, onOffController.u) annotation (Line(points={
+              {96,0},{110,0},{110,68},{34,68}}, color={0,0,127}));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
+                120,100}})),
+        Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
+                {120,100}})),
+        Documentation(info="<html>
+<h4>Electric Kettle</h4>
+<ul>
+<li>Volume of 1.7l</li>
+<li>230V main supply</li>
+<li>Power of 2000W</li>
+</ul>
+<p><br>Quistion: What should the resitance on the heating resistor be?</p>
+<p><br>Power = Voltage * Current</p>
+<p>Restitnace = Voltage / Current</p>
+<p><br>Restitnace = Voltage<sup>2</sup> / Power</p>
+<p><br><br><h5>Heat capacity of water</h5></p>
+<p>1 calory = heat energy needed to heat up one gram of water by 1 Kelvin</p>
+<p>1 calory = 4.18J/(g*k)</p>
+</html>"),
+        experiment(StopTime=480, __Dymola_NumberOfIntervals=5000));
+    end EletricKettel;
+  end Tutorial4;
   annotation (uses(Modelica(version="3.2.3")));
 end FM3217_2022;
