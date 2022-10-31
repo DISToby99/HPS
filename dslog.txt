@@ -1,28 +1,20 @@
-Log-file of program ./dymosim
-(generated: Mon Oct  3 13:39:47 2022)
+Model: FM3217_Assignment2022.YourSubLibrary.PowerConverters.Examples.PowerConverter1Diode
+Integration started at 0 using integration method:
+RK-method: radau IIa
+Local extrapolation
+FSAL
+Continuous extension
 
-dymosim started
-... "dsin.txt" loading (dymosim input file)
-... "EletricKettel.mat" creating (simulation result file)
-
-Integration started at T = 0 using integration method DASSL
-(DAE multi-step solver (dassl/dasslrt of Petzold modified by Dassault Systemes))
-Integration terminated successfully at T = 480
-   CPU-time for integration                : 2.12 seconds
-   CPU-time for one grid interval          : 0.425 milliseconds
-   CPU-time for initialization             : 0.001 seconds
-   Number of result points                 : 52011
-   Number of grid points                   : 5001
-   Number of accepted steps                : 1066270
-   Number of f-evaluations (dynamics)      : 2183029
-   Number of crossing function evaluations : 1094299
-   Number of Jacobian-evaluations          : 180331
-   Number of model time events             : 24000
-   Number of input time events             : 0
-   Number of state events                  : 5
-   Number of step events                   : 0
-   Minimum integration stepsize            : 1.84e-08
-   Maximum integration stepsize            : 0.0102
-   Maximum integration order               : 5
-Calling terminal section
-... "dsfinal.txt" creating (final states)
+Integration terminated successfully at T = 0.5
+   CPU-time for integration                  : 0.077 seconds
+   CPU-time for initialization               : 0.001 seconds
+   Number of result points                   : 5001
+   Number of grid points                     : 5000
+   Number of accepted steps                  : 6
+   Number of rejected steps                  : 0
+   Number of f-evaluations (dynamics)        : 17
+   Number of crossing function evaluations   : 0
+   Number of Jacobian-evaluations            : 1
+   Number of model time events               : 0
+   Number of state events                    : 0
+   Number of step events                     : 0

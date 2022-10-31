@@ -9,14 +9,14 @@ Modelica experiment file
 double experiment(7,1)
        0                   # StartTime    Time at which integration starts
                            #              (and linearization and trimming time)
-     480                   # StopTime     Time at which integration stops
+  5.0000000000000000E-01   # StopTime     Time at which integration stops
        0                   # Increment    Communication step size, if > 0
     5000                   # nInterval    Number of communication intervals, if > 0
-  1.0000000000000000E-04   # Tolerance    Relative precision of signals for
+  9.9999999999999995E-07   # Tolerance    Relative precision of signals for
                            #              simulation, linearization and trimming
        0                   # MaxFixedStep Maximum step size of fixed step size
                            #              integrators, if > 0.0
-       8                   # Algorithm    Integration algorithm as integer (1...28)
+      15                   # Algorithm    Integration algorithm as integer (1...28)
                            #
                            #             | model|       |        | dense | state |
                            # Algorithm   | typ  | stiff | order  | output| event |
@@ -102,133 +102,144 @@ int settings(13,1)
 
 
 #    Names of initial variables
-char initialName(62,34)
+char initialName(45,37)
+diode.diode1.v
+diode.diode1.Ids
+diode.diode1.useTemperatureDependency
+diode.diode1.Vt
+diode.diode1.Maxexp
+diode.diode1.R
+diode.diode1.EG
+diode.diode1.N
+diode.diode1.TNOM
+diode.diode1.XTI
+diode.diode1.useHeatPort
+diode.diode1.T
+diode.diode1.LossPower
+diode.diode1.vt_t
+diode.diode1.id
+diode.diode1.aux
+diode.diode1.auxp
+diode.diodeVoltage
+diode.p1.v
+diode.p1.i
+diode.n1.v
+voltageSensor.p.i
+voltageSensor.n.v
+voltageSensor.n.i
 resistor.R
 resistor.T_ref
 resistor.alpha
-resistor.v
-resistor.i
 resistor.n.v
 resistor.useHeatPort
 resistor.T
 resistor.LossPower
 resistor.R_actual
+ground.p.v
+ground.p.i
 sineVoltage.V
 sineVoltage.phase
-sineVoltage.freqHz
-sineVoltage.v
+sineVoltage.f
 sineVoltage.n.v
-sineVoltage.offset
-sineVoltage.startTime
 sineVoltage.signalSource.amplitude
-sineVoltage.signalSource.freqHz
+sineVoltage.signalSource.f
 sineVoltage.signalSource.phase
 sineVoltage.signalSource.offset
 sineVoltage.signalSource.startTime
-ground.p.v
-ground.p.i
-powerSensor.pv.i
-powerSensor.nv.v
-powerSensor.nv.i
-powerSensor.voltageSensor.p.i
-powerSensor.voltageSensor.n.v
-powerSensor.voltageSensor.n.i
-mean.y
-mean.f
-mean.x0
-mean.yGreaterOrEqualZero
-mean.t0
-mean.x
-mean.der(x)
-water.C
-water.T
-water.der(T)
-water.port.Q_flow
-temperatureSensor.T
-temperatureSensor.port.Q_flow
-KettleWall.Q_flow
-KettleWall.dT
-KettleWall.G
-RoomTemperature.T
-onOffController.y
-onOffController.bandwidth
-onOffController.pre_y_start
-const.k
-switch1.v
-switch1.Ron
-switch1.Goff
-switch1.useHeatPort
-switch1.T
-switch1.LossPower
-switch1.T_heatPort
-switch1.off
-switch1.s
-switch1.unitVoltage
-switch1.unitCurrent
+sineVoltage.offset
+sineVoltage.startTime
 
-double initialValue(62,6)
- -1  2.6449999999999999E+01  0       0                  1   280   # resistor.R
- -1  3.0014999999999998E+02  0 1.0000000000000000E+100  1   280   # resistor.T_ref
- -1       0                  0       0                  1   280   # resistor.alpha
-  0       0                  0       0                  6   256   # resistor.v
-  0       0                  0       0                  6   256   # resistor.i
-  0       0                  0       0                  6   260   # resistor.n.v
-  0       1                  0       0                  6   769   # resistor.useHeatPort
-  0  2.8814999999999998E+02  0 1.0000000000000000E+100  6   256   # resistor.T
-  0       0                  0       0                  6   256   # resistor.LossPower
-  0       0                  0       0                  6   256   # resistor.R_actual
- -1  3.2526911934581187E+02  0       0                  1   280   # sineVoltage.V
- -1       0                  0       0                  1   280   # sineVoltage.phase
- -1      50                  0       0                  1   280   # sineVoltage.freqHz
-  0       0                  0       0                  6   256   # sineVoltage.v
-  0       0                  0       0                  6   260   # sineVoltage.n.v
- -1       0                  0       0                  1   280   # sineVoltage.offset
- -1       0                  0       0                  1   280   # sineVoltage.startTime
-  0       0                  0       0                  6   256   # sineVoltage.signalSource.amplitude
-  0       1                  0       0                  6   256   # sineVoltage.signalSource.freqHz
-  0       0                  0       0                  6   256   # sineVoltage.signalSource.phase
-  0       0                  0       0                  6   256   # sineVoltage.signalSource.offset
-  0       0                  0       0                  6   256   # sineVoltage.signalSource.startTime
-  0       0                  0       0                  6   260   # ground.p.v
-  0       0                  0       0                  6   388   # ground.p.i
-  0       0                  0       0                  6   388   # powerSensor.pv.i
-  0       0                  0       0                  6   260   # powerSensor.nv.v
-  0       0                  0       0                  6   388   # powerSensor.nv.i
-  0       0                  0       0                  6   388   # powerSensor.voltageSensor.p.i
-  0       0                  0       0                  6   260   # powerSensor.voltageSensor.n.v
-  0       0                  0       0                  6   388   # powerSensor.voltageSensor.n.i
-  0       0                  0       0                  6   320   # mean.y
- -1      50                  0       0                  1   280   # mean.f
- -1       0                  0       0                  1   280   # mean.x0
-  0       0                  0       0                  6   257   # mean.yGreaterOrEqualZero
-  0       0                  0       0                  6  1280   # mean.t0
- -1       0                  0       0                  2  1296   # mean.x
-  0       0                  0       0                  3  1280   # mean.der(x)
- -1    7106                  0       0                  1   280   # water.C
- -1  2.8314999999999998E+02  0 1.0000000000000000E+100  2   280   # water.T
-  0       0                  0       0                  3   256   # water.der(T)
-  0       0                  0       0                  6   388   # water.port.Q_flow
-  0       0                  0       0                  6   256   # temperatureSensor.T
-  0       0                  0       0                  6   388   # temperatureSensor.port.Q_flow
-  0       0                  0       0                  6   256   # KettleWall.Q_flow
-  0       0                  0       0                  6   256   # KettleWall.dT
- -1      10                  0       0                  1   280   # KettleWall.G
- -1  2.9414999999999998E+02  0 1.0000000000000000E+100  1   280   # RoomTemperature.T
-  0       0                  0       0                  6   321   # onOffController.y
- -1       3                  0       0                  1   280   # onOffController.bandwidth
- -1       0                  0       0                  1   281   # onOffController.pre_y_start
- -1      95                  0       0                  1   280   # const.k
-  0       0                  0       0                  6   256   # switch1.v
- -1  1.0000000000000001E-05  0 1.0000000000000000E+100  1   280   # switch1.Ron
- -1  1.0000000000000001E-05  0 1.0000000000000000E+100  1   280   # switch1.Goff
-  0       0                  0       0                  6   769   # switch1.useHeatPort
-  0  2.9314999999999998E+02  0 1.0000000000000000E+100  6   256   # switch1.T
-  0       0                  0       0                  6   256   # switch1.LossPower
-  0  2.9314999999999998E+02  0 1.0000000000000000E+100  6   256   # switch1.T_heatPort
-  0       0                  0       0                  6  1345   # switch1.off
-  0       0                  0       0                  6  1280   # switch1.s
-  0       1                  0       0                  6   768   # switch1.unitVoltage
-  0       1                  0       0                  6   768   # switch1.unitCurrent
+double initialValue(45,6)
+  0       0                       0                       0                
+  6   288   # diode.diode1.v
+ -1  9.9999999999999995E-07       0                       0                
+  1   280   # diode.diode1.Ids
+  0       0                       0                       0                
+  6   769   # diode.diode1.useTemperatureDependency
+  0       0                       0                       0                
+  6   256   # diode.diode1.Vt
+ -1      15                  9.9999999999999997E-61 1.0000000000000000E+100
+  1   280   # diode.diode1.Maxexp
+ -1  1.0000000000000000E+08       0                       0                
+  1   280   # diode.diode1.R
+ -1  1.1100000000000001E+00       0                       0                
+  1   280   # diode.diode1.EG
+ -1       1                       0                       0                
+  1   280   # diode.diode1.N
+ -1  3.0014999999999998E+02       0                 1.0000000000000000E+100
+  1   280   # diode.diode1.TNOM
+ -1       3                       0                       0                
+  1   280   # diode.diode1.XTI
+  0       0                       0                       0                
+  6   769   # diode.diode1.useHeatPort
+ -1  2.9314999999999998E+02       0                 1.0000000000000000E+100
+  1   280   # diode.diode1.T
+  0       0                       0                       0                
+  6   256   # diode.diode1.LossPower
+  0       0                       0                       0                
+  6   256   # diode.diode1.vt_t
+  0       0                       0                       0                
+  6   256   # diode.diode1.id
+  0       0                       0                       0                
+  6  1280   # diode.diode1.aux
+  0       0                       0                       0                
+  6  1280   # diode.diode1.auxp
+ -1  2.0000000000000001E-01       0                       0                
+  1   280   # diode.diodeVoltage
+  0       0                       0                       0                
+  6   260   # diode.p1.v
+  0       0                       0                       0                
+  6   388   # diode.p1.i
+  0       0                       0                       0                
+  6   260   # diode.n1.v
+  0       0                       0                       0                
+  6   388   # voltageSensor.p.i
+  0       0                       0                       0                
+  6   260   # voltageSensor.n.v
+  0       0                       0                       0                
+  6   388   # voltageSensor.n.i
+ -1      10                       0                       0                
+  1   280   # resistor.R
+ -1  3.0014999999999998E+02       0                 1.0000000000000000E+100
+  1   280   # resistor.T_ref
+ -1       0                       0                       0                
+  1   280   # resistor.alpha
+  0       0                       0                       0                
+  6   260   # resistor.n.v
+  0       0                       0                       0                
+  6   769   # resistor.useHeatPort
+  0  2.8814999999999998E+02       0                 1.0000000000000000E+100
+  6   256   # resistor.T
+  0       0                       0                       0                
+  6   256   # resistor.LossPower
+  0       0                       0                       0                
+  6   256   # resistor.R_actual
+  0       0                       0                       0                
+  6   260   # ground.p.v
+  0       0                       0                       0                
+  6   388   # ground.p.i
+ -1      15                       0                       0                
+  1   280   # sineVoltage.V
+ -1       0                       0                       0                
+  1   280   # sineVoltage.phase
+ -1      50                       0                       0                
+  1   280   # sineVoltage.f
+  0       0                       0                       0                
+  6   260   # sineVoltage.n.v
+  0       0                       0                       0                
+  6   256   # sineVoltage.signalSource.amplitude
+  0       1                       0                       0                
+  6   256   # sineVoltage.signalSource.f
+  0       0                       0                       0                
+  6   256   # sineVoltage.signalSource.phase
+  0       0                       0                       0                
+  6   256   # sineVoltage.signalSource.offset
+  0       0                       0                       0                
+  6   256   # sineVoltage.signalSource.startTime
+ -1       0                       0                       0                
+  1   280   # sineVoltage.offset
+ -1       0                       0                       0                
+  1   280   # sineVoltage.startTime
 
 
 # Matrix with 6 columns defining the initial value calculation
@@ -279,67 +290,50 @@ double initialValue(62,6)
 #   nominal value (and maybe minimum and maximum values given in 
 #   column 3 and 4). If these values are zero, scale(i)=1 is used).
 #
-char initialDescription(62,90)
+char initialDescription(45,128)
+Voltage drop of the two pins (= p.v - n.v) [V]
+Saturation current [A]
+= true, if the diode current depends on temperature, otherwise utilizes the voltage equivalent of temperature [:#(type=Boolean)]
+Voltage equivalent of temperature (kT/qn) [V]
+Max. exponent for linear continuation
+Parallel ohmic resistance [Ohm]
+Activation energy
+Emission coefficient
+Parameter measurement temperature [K|degC]
+Temperature exponent of saturation current
+= true, if heatPort is enabled [:#(type=Boolean)]
+Fixed device temperature if useHeatPort = false [K|degC]
+Loss power leaving component via heatPort [W]
+Temperature voltage [V]
+Diode current [A]
+
+
+[v] The voltage drop over one diode (Total 4 diodes in the system) [V]
+Potential at the pin [V]
+Current flowing into the pin [A]
+Potential at the pin [V]
+Current flowing into the pin [A]
+Potential at the pin [V]
+Current flowing into the pin [A]
 Resistance at temperature T_ref [Ohm]
 Reference temperature [K|degC]
 Temperature coefficient of resistance (R_actual = R*(1 + alpha*(T_heatPort - T_ref)) [1/K]
-Voltage drop of the two pins (= p.v - n.v) [V]
-Current flowing from pin p to pin n [A]
 Potential at the pin [V]
-=true, if heatPort is enabled [:#(type=Boolean)]
+= true, if heatPort is enabled [:#(type=Boolean)]
 Fixed device temperature if useHeatPort = false [K|degC]
 Loss power leaving component via heatPort [W]
 Actual resistance = R*(1 + alpha*(T_heatPort - T_ref)) [Ohm]
+Potential at the pin [V]
+Current flowing into the pin [A]
 Amplitude of sine wave [V]
 Phase of sine wave [rad|deg]
 Frequency of sine wave [Hz]
-Voltage drop of the two pins (= p.v - n.v) [V]
 Potential at the pin [V]
-Voltage offset [V]
-Time offset [s]
 Amplitude of sine wave [V]
 Frequency of sine wave [Hz]
 Phase of sine wave [rad|deg]
 Offset of output signal y [V]
 Output y = offset for time < startTime [s]
-Potential at the pin [V]
-Current flowing into the pin [A]
-Current flowing into the pin [A]
-Potential at the pin [V]
-Current flowing into the pin [A]
-Current flowing into the pin [A]
-Potential at the pin [V]
-Current flowing into the pin [A]
-Connector of Real output signal [W]
-Base frequency [Hz]
-Start value of integrator state [J]
-=true, if output y is guaranteed to be >= 0 for the exact solution [:#(type=Boolean)]
-Start time of simulation [s]
-Integrator state [J]
-der(Integrator state) [W]
-Heat capacity of element (= cp*m) [J/K]
-Temperature of element [K|degC]
-der(Temperature of element) [K/s]
-Heat flow rate (positive if flowing from outside into the component) [W]
-Absolute temperature in degree Celsius as output signal [degC]
-Heat flow rate (positive if flowing from outside into the component) [W]
-Heat flow rate from port_a -> port_b [W]
-port_a.T - port_b.T [K,]
-Constant thermal conductance of material [W/K]
-Fixed temperature at port [K|degC]
-Connector of Real output signal used as actuator signal [:#(type=Boolean)]
-Bandwidth around reference signal
-Value of pre(y) at initial time [:#(type=Boolean)]
-Constant output value
-Voltage drop of the two pins (= p.v - n.v) [V]
-Closed switch resistance [Ohm]
-Opened switch conductance [S]
-=true, if heatPort is enabled [:#(type=Boolean)]
-Fixed device temperature if useHeatPort = false [K|degC]
-Loss power leaving component via heatPort [W]
-Temperature of heatPort [K|degC]
-Indicates off-state [:#(type=Boolean)]
-Auxiliary variable [1]
-[V]
-[A]
+Voltage offset [V]
+Time offset [s]
 

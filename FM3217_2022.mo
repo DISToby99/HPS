@@ -203,7 +203,8 @@ package FM3217_2022 "Collection of models in FM3217"
         connect(y, y) annotation (Line(points={{100,-2},{100,3},{100,3},{100,-2}},
               color={0,0,0}));
         annotation (Icon(coordinateSystem(preserveAspectRatio=false), graphics={
-                Bitmap(extent={{98,-100},{-100,100}}, fileName="modelica://FM3217_2022/electric-motor.jpg")}),
+                Bitmap(extent={{-100,-100},{98,100}}, fileName=
+                    "modelica://FM3217_2022/Bilder/electric-motor.jpg")}),
                                                                        Diagram(
               coordinateSystem(preserveAspectRatio=false)),
           Documentation(info="<html>
@@ -276,7 +277,8 @@ package FM3217_2022 "Collection of models in FM3217"
                 0},{-16,0},{-16,6.66134e-16},{-10,6.66134e-16}}, color={0,0,0}));
         connect(flange_a, inertia.flange_a) annotation (Line(points={{100,0},{56,0},{56,
                 -1.77636e-15},{10,-1.77636e-15}}, color={0,0,0}));
-        annotation (Icon(graphics={Bitmap(extent={{-92,-100},{108,100}}, fileName="modelica://FM3217_2022/trubine.jpg")}));
+        annotation (Icon(graphics={Bitmap(extent={{-92,-100},{108,100}},
+                  fileName="modelica://FM3217_2022/Bilder/trubine.jpg")}));
       end Turbine;
     end Componentes;
 
@@ -458,7 +460,8 @@ package FM3217_2022 "Collection of models in FM3217"
               {96,0},{110,0},{110,68},{34,68}}, color={0,0,127}));
       annotation (
         Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
-                120,100}})),
+                120,100}}), graphics={Bitmap(extent={{-100,-100},{120,100}},
+                fileName="modelica://FM3217_2022/Bilder/kettle.jpg")}),
         Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
                 {120,100}})),
         Documentation(info="<html>
