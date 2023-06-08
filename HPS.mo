@@ -690,6 +690,294 @@ package HPS "Items for HPS systems"
         __Dymola_experimentSetupOutput);
     end Sundsbam;
   end Tutorial7;
+
+  package Tutorial8
+    model EquivalentPowerFlow
+      Modelica.Mechanics.Rotational.Components.Inertia inertia(J=100, w(
+          displayUnit="Hz",
+          fixed=true,
+          start=314.15926535898))
+        annotation (Placement(transformation(extent={{-28,-26},{24,26}})));
+      Modelica.Mechanics.Rotational.Sources.ConstantTorque Generator(
+          tau_constant=10)
+        annotation (Placement(transformation(extent={{-72,-10},{-52,10}})));
+      Modelica.Mechanics.Rotational.Sources.ConstantTorque Load(tau_constant=-15)
+        annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=180,
+            origin={52,0})));
+    equation
+      connect(Generator.flange, inertia.flange_a)
+        annotation (Line(points={{-52,0},{-28,0}}, color={0,0,0}));
+      connect(inertia.flange_b, Load.flange)
+        annotation (Line(points={{24,0},{42,0}}, color={0,0,0}));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false)),
+        Diagram(coordinateSystem(preserveAspectRatio=false)),
+        experiment(StopTime=100, __Dymola_NumberOfIntervals=5000));
+    end EquivalentPowerFlow;
+
+    model FreqCalc
+      Modelica.Mechanics.Rotational.Components.Inertia inertia(J=2*200e6/(2*
+            Modelica.Constants.pi*50)^2, w(
+          displayUnit="Hz",
+          fixed=true,
+          start=314.15926535898))
+        annotation (Placement(transformation(extent={{-76,44},{-44,76}})));
+      Modelica.Mechanics.Rotational.Sources.ConstantTorque constantTorque(
+          tau_constant=-10e6/(2*Modelica.Constants.pi*50))
+        annotation (Placement(transformation(extent={{84,42},{48,78}})));
+      Modelica.Mechanics.Rotational.Sensors.PowerSensor powerSensor
+        annotation (Placement(transformation(extent={{-10,50},{10,70}})));
+    equation
+      connect(inertia.flange_b, powerSensor.flange_a)
+        annotation (Line(points={{-44,60},{-10,60}}, color={0,0,0}));
+      connect(powerSensor.flange_b, constantTorque.flange)
+        annotation (Line(points={{10,60},{48,60}}, color={0,0,0}));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false)),
+        Diagram(coordinateSystem(preserveAspectRatio=false)),
+        Documentation(info="<html>
+<h4>Example</h4>
+<p>K1 = 200 MJ</p>
+<p>P_L = 10 MW @ 1s</p>
+<p><br><b>Qusetion</b>: If the inertia was rotation at 50Hz at the beginning what is the speed/freq after 1s?</p>
+<p><br>K2 = K1 -P_L * 1s = 200 MJ - 10 MW * 1s = 200 MJ - 10 MJ = 190 MJ</p>
+<p><br>K = 1/2 * J * w<sup>2</sup> = 2 * J * pi<sup>2</sup> * f<sup>2</sup></p>
+<p>K1/K2 = 200MJ / 190 MJ = f1<sup>2</sup>/f2<sup>2</sup></p>
+<p><br>==&gt; f2 = sqrt(50<sup>2</sup> - 200/190) = <b>48.73Hz</b></p>
+<p><br>J = 2 * K / w<sup>2</sup></p>
+<p><br>T = P/w</p>
+</html>"),
+        experiment(__Dymola_Algorithm="Dassl"));
+    end FreqCalc;
+
+    model FreqCalc_Corrected
+      Modelica.Mechanics.Rotational.Components.Inertia inertia(J=2*200e6/(2*
+            Modelica.Constants.pi*50)^2, w(
+          displayUnit="Hz",
+          fixed=true,
+          start=314.15926535898))
+        annotation (Placement(transformation(extent={{-76,44},{-44,76}})));
+      Modelica.Mechanics.Rotational.Sensors.PowerSensor powerSensor
+        annotation (Placement(transformation(extent={{-10,50},{10,70}})));
+      Modelica.Mechanics.Rotational.Components.Inertia inertia1(J=2*200e6/(2*
+            Modelica.Constants.pi*50)^2, w(
+          displayUnit="Hz",
+          fixed=true,
+          start=314.15926535898))
+        annotation (Placement(transformation(extent={{-84,-60},{-52,-28}})));
+      Modelica.Mechanics.Rotational.Sensors.PowerSensor powerSensor1
+        annotation (Placement(transformation(extent={{-34,-54},{-14,-34}})));
+      Modelica.Mechanics.Rotational.Sources.Torque torque1
+        annotation (Placement(transformation(extent={{14,-54},{-6,-34}})));
+      Modelica.Blocks.Sources.Constant const(k=-10e6) annotation (Placement(
+            transformation(
+            extent={{10,-10},{-10,10}},
+            rotation=0,
+            origin={82,-26})));
+      Modelica.Blocks.Math.Division division
+        annotation (Placement(transformation(extent={{52,-54},{32,-34}})));
+      Modelica.Mechanics.Rotational.Sensors.SpeedSensor speedSensor
+        annotation (Placement(transformation(extent={{-32,-82},{-12,-62}})));
+      Modelica.Mechanics.Rotational.Sources.ConstantTorque constantTorque(
+          tau_constant=-10e6/(2*Modelica.Constants.pi*50))
+        annotation (Placement(transformation(extent={{68,42},{32,78}})));
+    equation
+      connect(inertia.flange_b, powerSensor.flange_a)
+        annotation (Line(points={{-44,60},{-10,60}}, color={0,0,0}));
+      connect(inertia1.flange_b, powerSensor1.flange_a)
+        annotation (Line(points={{-52,-44},{-34,-44}}, color={0,0,0}));
+      connect(powerSensor1.flange_b, torque1.flange)
+        annotation (Line(points={{-14,-44},{-6,-44}}, color={0,0,0}));
+      connect(const.y, division.u1) annotation (Line(points={{71,-26},{62,-26},
+              {62,-38},{54,-38}}, color={0,0,127}));
+      connect(inertia1.flange_b, speedSensor.flange) annotation (Line(points={{
+              -52,-44},{-42,-44},{-42,-72},{-32,-72}}, color={0,0,0}));
+      connect(speedSensor.w, division.u2) annotation (Line(points={{-11,-72},{
+              74,-72},{74,-50},{54,-50}}, color={0,0,127}));
+      connect(division.y, torque1.tau)
+        annotation (Line(points={{31,-44},{16,-44}}, color={0,0,127}));
+      connect(powerSensor.flange_b, constantTorque.flange)
+        annotation (Line(points={{10,60},{32,60}}, color={0,0,0}));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false)),
+        Diagram(coordinateSystem(preserveAspectRatio=false)),
+        Documentation(info="<html>
+<h4>Example</h4>
+<p>K1 = 200 MJ</p>
+<p>P_L = 10 MW @ 1s</p>
+<p><br><b>Qusetion</b>: If the inertia was rotation at 50Hz at the beginning what is the speed/freq after 1s?</p>
+<p><br>K2 = K1 -P_L * 1s = 200 MJ - 10 MW * 1s = 200 MJ - 10 MJ = 190 MJ</p>
+<p><br>K = 1/2 * J * w<sup>2</sup> = 2 * J * pi<sup>2</sup> * f<sup>2</sup></p>
+<p>K1/K2 = 200MJ / 190 MJ = f1<sup>2</sup>/f2<sup>2</sup></p>
+<p><br>==&gt; f2 = sqrt(50<sup>2</sup> - 200/190) = <b>48.73Hz</b></p>
+<p><br>J = 2 * K / w<sup>2</sup></p>
+<p><br>T = P/w</p>
+</html>"),
+        experiment(__Dymola_Algorithm="Dassl"));
+    end FreqCalc_Corrected;
+
+    model ElectricalPowerFlowCalc
+      Modelica.Electrical.Analog.Basic.Ground ground
+        annotation (Placement(transformation(extent={{-70,0},{-50,20}})));
+      Modelica.Electrical.Analog.Basic.Inductor Xs
+        annotation (Placement(transformation(extent={{-40,70},{-20,90}})));
+      Modelica.Electrical.Analog.Sources.SineVoltage Ea(
+        V=sqrt(2)*240,
+        phase=0,
+        f=50) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={-60,50})));
+      Modelica.Electrical.Analog.Sources.SineVoltage V_terminal(V=sqrt(2)*230,
+          f=50) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={60,50})));
+      Modelica.Electrical.Analog.Sensors.PowerSensor powerSensor
+        annotation (Placement(transformation(extent={{10,70},{30,90}})));
+    equation
+      connect(Ea.p, Xs.p) annotation (Line(points={{-60,60},{-60,80},{-40,80}},
+            color={0,0,255}));
+      connect(Ea.n, ground.p)
+        annotation (Line(points={{-60,40},{-60,20}}, color={0,0,255}));
+      connect(V_terminal.n, ground.p) annotation (Line(points={{60,40},{60,30},
+              {-60,30},{-60,20}}, color={0,0,255}));
+      connect(Xs.n, powerSensor.pc)
+        annotation (Line(points={{-20,80},{10,80}}, color={0,0,255}));
+      connect(V_terminal.p, powerSensor.nc)
+        annotation (Line(points={{60,60},{60,80},{30,80}}, color={0,0,255}));
+      connect(powerSensor.pv, powerSensor.nc) annotation (Line(points={{20,90},
+              {60,90},{60,80},{30,80}}, color={0,0,255}));
+      connect(powerSensor.nv, ground.p) annotation (Line(points={{20,70},{20,30},
+              {-60,30},{-60,20}}, color={0,0,255}));
+      annotation (
+        Icon(coordinateSystem(preserveAspectRatio=false)),
+        Diagram(coordinateSystem(preserveAspectRatio=false)),
+        experiment(__Dymola_NumberOfIntervals=5000, __Dymola_Algorithm="Dassl"));
+    end ElectricalPowerFlowCalc;
+
+    model El3PhasePoFloCalc
+      extends ElectricalPowerFlowCalc;
+      Modelica.Electrical.Polyphase.Basic.Inductor inductor
+        annotation (Placement(transformation(extent={{-40,-30},{-20,-10}})));
+      Modelica.Electrical.Polyphase.Sources.SineVoltage EaM(
+        V=sqrt(2)*{270,270,270},
+        phase=-Modelica.Electrical.Polyphase.Functions.symmetricOrientation(3)
+             - {30,30,30},
+        f={50,50,50}) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={-60,-30})));
+      Modelica.Electrical.Polyphase.Sources.SineVoltage V_terminalM(V=sqrt(2)*{
+            230,230,230}, f={50,50,50}) annotation (Placement(transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={60,-30})));
+      Modelica.Electrical.Polyphase.Basic.Star star annotation (Placement(
+            transformation(
+            extent={{-10,-10},{10,10}},
+            rotation=270,
+            origin={-60,-72})));
+      Modelica.Electrical.Analog.Basic.Ground ground1
+        annotation (Placement(transformation(extent={{-70,-100},{-50,-80}})));
+      Modelica.Electrical.Polyphase.Sensors.ReactivePowerSensor Q
+        annotation (Placement(transformation(extent={{26,-30},{46,-10}})));
+      Modelica.Electrical.Polyphase.Sensors.AronSensor P
+        annotation (Placement(transformation(extent={{-10,-30},{10,-10}})));
+    equation
+      connect(EaM.plug_p, inductor.plug_p)
+        annotation (Line(points={{-60,-20},{-40,-20}}, color={0,0,255}));
+      connect(EaM.plug_n, star.plug_p)
+        annotation (Line(points={{-60,-40},{-60,-62}}, color={0,0,255}));
+      connect(star.pin_n, ground1.p)
+        annotation (Line(points={{-60,-82},{-60,-80}}, color={0,0,255}));
+      connect(V_terminalM.plug_n, star.plug_p) annotation (Line(points={{60,-40},
+              {60,-46},{-60,-46},{-60,-62}}, color={0,0,255}));
+      connect(V_terminalM.plug_p, Q.plug_n)
+        annotation (Line(points={{60,-20},{46,-20}}, color={0,0,255}));
+      connect(Q.plug_p, P.plug_n)
+        annotation (Line(points={{26,-20},{10,-20}}, color={0,0,255}));
+      connect(inductor.plug_n, P.plug_p)
+        annotation (Line(points={{-20,-20},{-10,-20}}, color={0,0,255}));
+      annotation (experiment(StopTime=0.1, __Dymola_Algorithm="Dassl"));
+    end El3PhasePoFloCalc;
+  end Tutorial8;
+
+  package Tutorial9
+    model SampleCalculations
+      extends Modelica.Icons.Information;
+      annotation (Documentation(info="<html>
+<h4>Sample calculations for production balance in the Power grid</h4>
+<p><br>P<sub>grid</sub> = 1000 MW</p>
+<p>P<sub>1</sub> = 0.45 * P<sub>grid </sub>= 450 MW</p>
+<p>P<sub>1units</sub> = 20</p>
+<p>P<sub>1perUnit</sub> = p<sub>1</sub> / P<sub>1units</sub> = 450 MW / 20 = 22.5 MW</p>
+<p>deltaP = distNoGen * P<sub>1perUnit</sub> = -2 * 22.5 = 45 MW</p>
+</html>"));
+    end SampleCalculations;
+
+    model ResistiveLoad
+      extends HydroPower.Examples.PlantConnectAndDisconnectToGrid(
+        pwr_ref(offset=45e6),
+        turbineGovernor(enableDroop=false),
+        generator(timeMCB_open={1e6}),
+        powerGrid(
+          loadDiv={1,0,0},
+          enableDroop=false,
+          NoGenUnits={20,20,500},
+          distTgen={150,1000,1e6},
+          distNoGen={-1,-10,0}));
+      annotation (experiment(StopTime=2000, __Dymola_Algorithm="Radau"));
+    end ResistiveLoad;
+
+    model DroopSimulations
+      extends ResistiveLoad(pwr_ref(offset=22.5e6), turbineGovernor(enableDroop=
+             true, ep=0.05),
+        generator(timeMCB_open={300}));
+      annotation (experiment(
+          StopTime=2000,
+          Tolerance=1e-05,
+          __Dymola_Algorithm="Radau"));
+    end DroopSimulations;
+  end Tutorial9;
+
+  package Tutorial10
+    model LoadChanges
+      extends HydroPower.Examples.PlantConnectAndDisconnectToGrid(
+        pwr_ref(offset=22.5e6),
+        generator(timeMCB_open={1e6}),
+        powerGrid(
+          loadDiv={0,0,1},
+          enableDroop=false,
+          NoGenUnits={20,100,500},
+          distTgen={150,1000,1e6},
+          distNoGen={-1,-50,0}),
+        turbineGovernor(ep=0.1));
+      annotation (experiment(
+          StopTime=2000,
+          Tolerance=1e-05,
+          __Dymola_Algorithm="Radau"));
+    end LoadChanges;
+
+    model ProductionDroop
+      extends LoadChanges(powerGrid(
+          loadDiv={0.5,0.25,0.25},
+          enableDroop=true,
+          ep={0.1,0.08,0.04}));
+    end ProductionDroop;
+
+    model RandomLoad
+      extends LoadChanges(powerGrid(
+          loadDiv={0.5,0.25,0.25},
+          startTime=1000,
+          h=1,
+          enableDroop=true,
+          ep={0.1,0.08,0.04},
+          distTgen={150,1e6,1e6}));
+    end RandomLoad;
+  end Tutorial10;
   annotation (uses(HydroPower(version="2.15"), Modelica(version="4.0.0"),
       Modelon(version="4.1")));
 end HPS;
